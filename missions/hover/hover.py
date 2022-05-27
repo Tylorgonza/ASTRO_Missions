@@ -9,6 +9,7 @@ from skymission.concurrency import tick
 from skymission.mission import Mission
 from skymission.mission import callback
 from skymission.mission import panic
+from datetime import date
 
 
 class LocationMessage(BaseMessage):
@@ -44,7 +45,8 @@ class HoverMission(Mission):
     """
     A mission to take off, hover, and land.
     """
-    f= open("log_"+today(),'w')
+    today = date.today()
+    f= open("log_{today}",'w')
 
     port = 4000
     mission_id = 'hover'
