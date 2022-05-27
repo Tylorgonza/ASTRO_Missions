@@ -48,6 +48,10 @@ class HoverMission(Mission):
     port = 4000
     mission_id = 'hover'
 
+    """
+	CREATING INSTANCE OF TXT SHEET TO WRITE TO WHILE GRABBING DATA DURING THIS MISSION
+    """
+    f = open("log_"+today(),'w')
     def __init__(self, fc_addr, log_file):
         """
         Create a HoverMission, which is started as soon as the class is instantiated.
@@ -116,7 +120,9 @@ class HoverMission(Mission):
             self.log.debug('Current location: ({lat}, {lon})'.format(lat=location.lat,lon=location.lon,))
 
 	    # Moving to location 1: center of the field
-
+	    """
+	    logging first location
+	    """
             nextlat, nextlon = 29.71758978560598, -95.4055873521442
 
             self.log.debug('Navigating to waypoint: ({lat}, {lon})'.format(lat=nextlat,lon=nextlon,))
@@ -127,8 +133,14 @@ class HoverMission(Mission):
             self.log.debug('Arrived! Current location: ({lat}, {lon})'.format(lat=location.lat,lon=location.lon,))
 
             time.sleep(3)
+	    	f.write("first location (lat,lon): {lat},{lon} Alt: {alt}  \t")
+	    	f.write()
 
             # Moving to location 2
+            """
+            logging second location
+            """
+
 
             nextlat, nextlon = 29.717660833596735, -95.40562356196683
 
@@ -140,6 +152,9 @@ class HoverMission(Mission):
             self.log.debug('Arrived! Current location: ({lat}, {lon})'.format(lat=location.lat,lon=location.lon,))
 
             time.sleep(3)
+            f.write("second location (lat,lon): {lat},{lon} Alt: {alt} \t")
+
+
 
             # Moving to location 3
 
@@ -156,10 +171,14 @@ class HoverMission(Mission):
 
             self.log.debug('Hovering for: {hover_time} seconds'.format(hover_time=hover_time))
             time.sleep(hover_time)
+            #third location being logged
+            f.write("third location (lat,lon): {lat},{lon} Alt: {alt} Hovertime: {hover_time} \t")
+
 
             self.log.info('Hovering complete; begin landing')
             self.dc.land()
             self.log.info('Landed!')
+            f.close()
         except FlightAbortedException:
             self.log.warn('Flight aborted due to emergency panic!')
 
