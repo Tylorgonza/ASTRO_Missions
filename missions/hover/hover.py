@@ -44,6 +44,7 @@ class HoverMission(Mission):
     """
     A mission to take off, hover, and land.
     """
+    f= open("log_"+today(),'w')
 
     port = 4000
     mission_id = 'hover'
@@ -109,13 +110,15 @@ class HoverMission(Mission):
             self.log.debug('Taking off to altitude: {alt}'.format(alt=alt))
             self.dc.take_off(alt)
             self.log.debug('Take off complete')
+            f.write("Alt: {alt} \t")
 
             self.log.debug('Hovering for: {hover_time} seconds'.format(hover_time=hover_time))
             time.sleep(hover_time)
-
+            f.write("Hovertime: {hover_time}")
             self.log.info('Hovering complete; begin landing')
             self.dc.land()
             self.log.info('Landed!')
+            f.close()
         except FlightAbortedException:
             self.log.warn('Flight aborted due to emergency panic!')
 
