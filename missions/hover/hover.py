@@ -46,7 +46,7 @@ class HoverMission(Mission):
     A mission to take off, hover, and land.
     """
     today = date.today()
-    f= open("log_{today}",'w')
+    f= open('log_ {today}','w')
 
     port = 4000
     mission_id = 'hover'
